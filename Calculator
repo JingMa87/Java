@@ -1,136 +1,154 @@
-package Calculator;
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
 
-// @author Ma Jing
+/**
+* @author Jing Ma
+* Calculator application that lets you do basic arithmetic.
+* Includes the code for the functionality, not for the GUI.
+*/
 public class Calculator extends javax.swing.JFrame {
 
-    double firstnum;
-    double secondnum;
-    double result;
-    String answer;
-    String operations;
+    // Instance variables for doing the calculations
+    double firstNum;
+    private double firstNum;
+    private double secondNum;
+    private double result;
+    private String answer;
+    private String operation;
     
-    // Creates new form Calculator
+    // Instance variables for the GUI buttons and textfield
+    private javax.swing.JButton addButton;
+    private javax.swing.JButton calculateButton;
+    private javax.swing.JButton clearButton;
+    private javax.swing.JButton decimalButton;
+    private javax.swing.JButton divisionButton;
+    private javax.swing.JButton eightButton;
+    private javax.swing.JButton fiveButton;
+    private javax.swing.JButton fourButton;
+    private javax.swing.JButton multiplyButton;
+    private javax.swing.JButton nineButton;
+    private javax.swing.JButton oneButton;
+    private javax.swing.JPanel panel;
+    private javax.swing.JTextField screen;
+    private javax.swing.JButton sevenButton;
+    private javax.swing.JButton sixButton;
+    private javax.swing.JButton subtractButton;
+    private javax.swing.JButton threeButton;
+    private javax.swing.JButton twoButton;
+    private javax.swing.JButton zeroButton;
+    
+    // Creates new NetBeans Calculator form
     public Calculator() {
         initComponents();
+        setLocationRelativeTo(null);
     }
-
-    private void jButton17ActionPerformed(java.awt.event.ActionEvent evt) {                                          
-        secondnum = Double.parseDouble(jTextField1.getText());
-        if (operations == "+") {
-            result = firstnum + secondnum;
-            answer = String.format("%.8f", result);
-            jTextField1.setText(answer);
-        }
-        else if (operations == "-") {
-            result = firstnum - secondnum;
-            answer = String.format("%.8f", result);
-            jTextField1.setText(answer);
-        }
-        else if (operations == "*") {
-            result = firstnum * secondnum;
-            answer = String.format("%.8f", result);
-            jTextField1.setText(answer);
-        }
-        else if (operations == "/") {
-            result = firstnum / secondnum;
-            answer = String.format("%.8f", result);
-            jTextField1.setText(answer);
-        }
+    
+    // Puts the number of all number buttons to the screen when pressed
+    private void oneButtonActionPerformed(java.awt.event.ActionEvent evt) {                                          
+        setValue("1");
+    }    
+    
+    private void twoButtonActionPerformed(java.awt.event.ActionEvent evt) {                                          
+        setValue("2");
     }                                         
 
-    private void jButton16ActionPerformed(java.awt.event.ActionEvent evt) {                                          
-        firstnum = Double.parseDouble(jTextField1.getText());
-        jTextField1.setText("");
-        operations = "/";
-    }                                         
-
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {                                         
-        String entervalue = jTextField1.getText() + jButton4.getText();
-        jTextField1.setText(entervalue);
-    }                                        
-
-    private void jButton15ActionPerformed(java.awt.event.ActionEvent evt) {                                          
-        String entervalue = jTextField1.getText() + jButton15.getText();
-        jTextField1.setText(entervalue);
-    }                                         
-
-    private void jButton14ActionPerformed(java.awt.event.ActionEvent evt) {                                          
-        jTextField1.setText("");
-    }                                         
-
-    private void jButton13ActionPerformed(java.awt.event.ActionEvent evt) {                                          
-        firstnum = Double.parseDouble(jTextField1.getText());
-        jTextField1.setText("");
-        operations = "*";
-    }                                         
-
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {                                         
-        String entervalue = jTextField1.getText() + jButton3.getText();
-        jTextField1.setText(entervalue);
-    }                                        
-
-    private void jButton12ActionPerformed(java.awt.event.ActionEvent evt) {                                          
-        String entervalue = jTextField1.getText() + jButton12.getText();
-        jTextField1.setText(entervalue);
-    }                                         
-
-    private void jButton11ActionPerformed(java.awt.event.ActionEvent evt) {                                          
-        String entervalue = jTextField1.getText() + jButton11.getText();
-        jTextField1.setText(entervalue);
-    }                                         
-
-    private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {                                          
-        firstnum = Double.parseDouble(jTextField1.getText());
-        jTextField1.setText("");
-        operations = "-";
-    }                                         
-
-    private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {                                         
-        String entervalue = jTextField1.getText() + jButton9.getText();
-        jTextField1.setText(entervalue);
-    }                                        
-
-    private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {                                         
-        String entervalue = jTextField1.getText() + jButton8.getText();
-        jTextField1.setText(entervalue);
-    }                                        
-
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {                                         
-        String entervalue = jTextField1.getText() + jButton2.getText();
-        jTextField1.setText(entervalue);
-    }                                        
-
-    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {                                         
-        firstnum = Double.parseDouble(jTextField1.getText());
-        jTextField1.setText("");
-        operations = "+";
-    }                                        
-
-    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {                                         
-        String entervalue = jTextField1.getText() + jButton6.getText();
-        jTextField1.setText(entervalue);
-    }                                        
-
-    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {                                         
-        String entervalue = jTextField1.getText() + jButton5.getText();
-        jTextField1.setText(entervalue);
-    }                                        
-
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {                                         
-        String entervalue = jTextField1.getText() + jButton1.getText();
-        jTextField1.setText(entervalue);
-    }                                        
-
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {                                            
-        // TODO add your handling code here:
+    private void threeButtonActionPerformed(java.awt.event.ActionEvent evt) {                                            
+        setValue("3");
     }                                           
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        // Create and display the form
-        java.awt.EventQueue.invokeLater(() -> {
-            new Calculator().setVisible(true);
-        });
+    private void fourButtonActionPerformed(java.awt.event.ActionEvent evt) {                                           
+        setValue("4");
+    }                                          
+
+    private void fiveButtonActionPerformed(java.awt.event.ActionEvent evt) {                                           
+        setValue("5");
+    }         
+    
+    private void sixButtonActionPerformed(java.awt.event.ActionEvent evt) {                                          
+        setValue("6");
+    }    
+    
+    private void sevenButtonActionPerformed(java.awt.event.ActionEvent evt) {                                            
+        setValue("7");
+    }                                           
+
+    private void eightButtonActionPerformed(java.awt.event.ActionEvent evt) {                                            
+        setValue("8");
+    } 
+    
+    private void nineButtonActionPerformed(java.awt.event.ActionEvent evt) {                                           
+        setValue("9");
+    }            
+    
+    private void zeroButtonActionPerformed(java.awt.event.ActionEvent evt) {                                           
+        setValue("0");
+    }    
+    
+    // Sets a single period for decimal numbers
+    private void decimalButtonActionPerformed(java.awt.event.ActionEvent evt) {                                              
+        String value = screen.getText();
+        if (!value.contains(".")) {
+            setValue(".");
+        }
+    }                                             
+
+    // Clears the screen
+    private void clearButtonActionPerformed(java.awt.event.ActionEvent evt) {                                            
+        screen.setText("");
+    }                                           
+
+    // Sets the arithmetic operation when an arithmetic button is pressed
+    private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {                                          
+        getFirstNum("+");
+    }                                         
+
+    private void subtractButtonActionPerformed(java.awt.event.ActionEvent evt) {                                               
+        getFirstNum("-");
+    }                                              
+
+    private void multiplyButtonActionPerformed(java.awt.event.ActionEvent evt) {                                               
+        getFirstNum("*");
+    }   
+    
+    private void divisionButtonActionPerformed(java.awt.event.ActionEvent evt) {                                               
+        getFirstNum("/");
+    }                                              
+
+    // Calculates the result from firstNum and secondNum
+    private void calculateButtonActionPerformed(java.awt.event.ActionEvent evt) {                                                
+        secondNum = Double.parseDouble(screen.getText());
+        if (operation != null) switch (operation) {
+            case "+": 
+                result = firstNum + secondNum;
+                break;
+            case "-":
+                result = firstNum - secondNum;
+                break;
+            case "*":
+                result = firstNum * secondNum;
+                break;
+            case "/":
+                result = firstNum / secondNum;
+                break;
+            default:
+                break;
+        }
+        // Sets the result to 12 decimals and puts it on screen
+        DecimalFormat df = new DecimalFormat("#.############");
+        df.setRoundingMode(RoundingMode.HALF_UP);
+        answer = df.format(result);
+        screen.setText(answer);
+    }                                               
+
+    // Saves the first number, clears the screen and sets the arithmetic operation
+    private void getFirstNum(String operation) {
+        firstNum = Double.parseDouble(screen.getText());
+        screen.setText("");
+        this.operation = operation;
+    }
+    
+    // Puts the second value on screen
+    private void setValue(String num) {
+        String secondValue = screen.getText() + num;
+        screen.setText(secondValue);
     }
