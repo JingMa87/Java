@@ -36,10 +36,9 @@ public class Calculator extends javax.swing.JFrame {
     private javax.swing.JButton threeButton;
     private javax.swing.JButton twoButton;
     private javax.swing.JButton zeroButton;
-    
-    // Creates new NetBeans Calculator form
+
     public Calculator() {
-        initComponents();
+        // Opens the application in the middle of the screen
         setLocationRelativeTo(null);
     }
     
