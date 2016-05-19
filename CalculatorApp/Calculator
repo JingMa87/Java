@@ -7,7 +7,6 @@ import java.text.DecimalFormat;
  * Includes the code for the functionality, not for the GUI.
  */
 public class Calculator extends javax.swing.JFrame {
-
     // Instance variables for doing the calculations
     double firstNum;
     private double firstNum;
@@ -15,7 +14,6 @@ public class Calculator extends javax.swing.JFrame {
     private double result;
     private String answer;
     private String operation;
-    
     // Instance variables for the GUI buttons and textfield
     private javax.swing.JButton addButton;
     private javax.swing.JButton calculateButton;
