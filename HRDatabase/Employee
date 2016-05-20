@@ -1,0 +1,124 @@
+package HRDatabase;
+
+import java.io.Serializable;
+
+/**
+ * Employee class that gives employee objects multiple attributes
+ * Implements serializable to make reading and writing possible
+ */
+public class Employee implements Serializable{
+    // Attributes of an employee
+    private String firstName;
+    private String lastName;
+    private String department;
+    private String status;
+    private String startDate;
+    private String endDate;
+    private String country;
+    private String email;
+    private String phone;
+
+    // Constructor taking in employee info as arguments
+    Employee(String firstName, String lastName, String department, String status, 
+    String startDate, String endDate, String country, String email, String phone) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.department = department;
+        this.status = status;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.country = country;
+        this.email = email;
+        this.phone = phone;
+    }   
+
+    // Returns the first name of the employee
+    public String getFirstName() {
+        return firstName;
+    }
+    
+    // Changes the first name of the employee
+    public void setFirstName(String text) {
+        firstName = text;
+    }
+    
+    // Returns the last name of the employee
+    public String getLastName() {
+        return lastName;
+    }
+    
+    // Changes the last name of the employee
+    public void setLastName(String text) {
+        lastName = text;
+    }
+    
+    // Returns the department of the employee
+    public String getDepartment() {
+        return department;
+    }
+            
+    // Changes the department of the employee
+    public void setDepartment(String text) {
+        department = text;
+    }
+
+    // Returns the status of the employee
+    public String getStatus() {
+        return status;
+    }
+        
+    // Changes the status of the employee
+    public void setStatus(String text) {
+        status = text;
+    }
+
+    // Returns the start date of the employee
+    public String getStartDate() {
+        return startDate;
+    }
+            
+    // Changes the start date of the employee
+    public void setStartDate(String text) {
+        startDate = text;
+    }
+
+    // Returns the end date of the employee
+    public String getEndDate() {
+        return endDate;
+    }
+            
+    // Changes the end date of the employee
+    public void setEndDate(String text) {
+        endDate = text;
+    }
+
+    // Returns the country of the employee
+    public String getCountry() {
+        return country;
+    }
+            
+    // Changes the country of the employee
+    public void setCountry(String text) {
+        country = text;
+    }
+
+    // Returns the e-mail of the employee
+    public String getEmail() {
+        return email;
+    }
+            
+    // Changes the e-mail of the employee
+    public void setEmail(String text) {
+        email = text;
+    }
+
+    // Returns the phone no. of the employee
+    public String getPhone() {
+        return phone;
+    }
+            
+    // Changes the phone no. of the employee
+    public void setPhone(String text) {
+        phone = text;
+    }
+}
