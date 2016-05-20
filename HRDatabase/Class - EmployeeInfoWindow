@@ -25,11 +25,10 @@ public class EmployeeInfoWindow extends javax.swing.JDialog {
     private javax.swing.JLabel statusLabel1;
     private javax.swing.JLabel statusLabel2;
     
-    // Opens a pop-up window with all the employee info displayed vertically
+    // Constructor
     public EmployeeInfoWindow(java.awt.Frame parent, boolean modal, Employee employee) {
         // Blocks input to the parent window of this page, the HR Database 
         super(parent, modal);
-        initComponents();
         setLocationRelativeTo(parent);
         
         // Sets the title of this page to the full name of the employee
