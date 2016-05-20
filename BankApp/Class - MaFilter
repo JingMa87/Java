@@ -1,0 +1,19 @@
+import java.io.File;
+import javax.swing.filechooser.FileFilter;
+
+/**
+ * File filter that filters for .ma files and checks for correctness
+ */
+class MaFilter extends FileFilter {
+    // Checks if the path is correct
+    @Override
+    public boolean accept(File f) {
+        return f.isDirectory() || f.getName().toLowerCase().endsWith(".ma");
+    }
+
+    // Changes the description of the file filter to "Jing Ma File"
+    @Override
+    public String getDescription() {
+        return "Jing Ma File";
+    }
+}
