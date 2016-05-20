@@ -1,4 +1,7 @@
-// Opens a pop-up window with all the employee info displayed vertically
+/**
+ * Opens a pop-up window with all the employee info displayed vertically.
+ * Extends the JDialog window class
+ */
 public class EmployeeInfoWindow extends javax.swing.JDialog {
 
     // Initializes GUI components
