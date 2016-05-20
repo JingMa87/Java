@@ -1,0 +1,49 @@
+/**
+ * Opens a pop-up window with all the customer info displayed vertically.
+ * Extends the JDialog window class
+ */
+public class CustomerInfoWindow extends javax.swing.JDialog {
+
+    // Initializes GUI components
+    private javax.swing.JLabel accountNumberField;
+    private javax.swing.JLabel balanceField;
+    private javax.swing.JLabel feeField;
+    private javax.swing.JLabel firstNameField;
+    private javax.swing.JLabel interestField;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel9;
+    private javax.swing.JLabel lastNameField;
+    private javax.swing.JLabel ssnField;
+    private javax.swing.JLabel typeField;
+    
+    // Constructor
+    public CustomerInfoWindow(java.awt.Frame parent, boolean modal, Customer customer) {
+        // Blocks input to the parent window of this page, the HR Database 
+        super(parent, modal);
+        setLocationRelativeTo(parent);
+        
+        // Sets the title of this page to the full name of the customer
+        setTitle(String.format("Details - %s %s", customer.getFirstName(), customer.getLastName()));
+        
+        // Puts the customer's info on this page
+        firstNameField.setText(customer.getFirstName());
+        lastNameField.setText(customer.getLastName());
+        ssnField.setText(customer.getSsn());
+        typeField.setText(customer.getAccount().getAccountType());
+        accountNumberField.setText(String.valueOf(customer.getAccount().getAccountNumber()));
+        balanceField.setText(String.format("$%.2f", customer.getAccount().getBalance()));
+        interestField.setText(String.valueOf(customer.getAccount().getInterest() * 100) + "%");
+        feeField.setText(String.format("$%.2f", customer.getAccount().getTransactionFee()));
+    }
+    
+    // Closes the CustomerInfoWindow
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {                                         
+        this.dispose();
+    }  
