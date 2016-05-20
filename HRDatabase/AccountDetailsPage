@@ -1,5 +1,5 @@
 // Opens a pop-up window with all the employee info displayed vertically
-public class AccountDetailsPage extends javax.swing.JDialog {
+public class EmployeeInfoWindow extends javax.swing.JDialog {
 
     // Initializes GUI components
     private javax.swing.JLabel countryLabel1;
@@ -23,7 +23,7 @@ public class AccountDetailsPage extends javax.swing.JDialog {
     private javax.swing.JLabel statusLabel2;
     
     // Opens a pop-up window with all the employee info displayed vertically
-    public AccountDetailsPage(java.awt.Frame parent, boolean modal, Employee employee) {
+    public EmployeeInfoWindow(java.awt.Frame parent, boolean modal, Employee employee) {
         // Blocks input to the parent window of this page, the HR Database 
         super(parent, modal);
         initComponents();
@@ -44,7 +44,7 @@ public class AccountDetailsPage extends javax.swing.JDialog {
         phoneLabel2.setText(employee.getPhone());
     }
     
-    // Closes the AccountDetailsPage
+    // Closes the EmployeeInfoWindow
     private void okButtonActionPerformed(java.awt.event.ActionEvent evt) {                                         
         this.dispose();
     }                                        
