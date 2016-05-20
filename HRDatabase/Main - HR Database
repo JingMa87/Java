@@ -1,0 +1,340 @@
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import javax.swing.JFileChooser;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
+/**
+ * HR Database application that lets you add employee info to a table.
+ * There's also a save/open file functionality to export and import this info.
+ */
+public class HRDatabase extends JFrame {
+
+    // Instance variables for adding Employee objects to a table and
+    // to an ArrayList in the Database class
+    private Employee employee;
+    private Database database;
+    private String saveLocation;
+    private DefaultTableModel model;
+    
+    // Instance variables for the GUI buttons and text fields
+    private javax.swing.JButton addButton;
+    private javax.swing.JLabel addEmployeeLabel;
+    private javax.swing.JButton clearButton;
+    private javax.swing.JComboBox<String> countryBox;
+    private javax.swing.JLabel countryLabel;
+    private javax.swing.JButton deleteButton;
+    private javax.swing.JComboBox<String> departmentBox;
+    private javax.swing.JLabel departmentLabel;
+    private javax.swing.JTextField emailField;
+    private javax.swing.JLabel emailLabel;
+    private javax.swing.JComboBox<String> endDateBox;
+    private javax.swing.JLabel endDateLabel;
+    private javax.swing.JTextField firstNameField;
+    private javax.swing.JLabel firstNameLabel;
+    private javax.swing.JTextField lastNameField;
+    private javax.swing.JLabel lastNameLabel;
+    private javax.swing.JMenu menu;
+    private javax.swing.JMenuBar menuBar;
+    private javax.swing.JMenuItem menuExit;
+    private javax.swing.JMenuItem menuOpen;
+    private javax.swing.JMenuItem menuSave;
+    private javax.swing.JMenuItem menuSaveAs;
+    private javax.swing.JPanel panel1;
+    private javax.swing.JPanel panel2;
+    private javax.swing.JTextField phoneField;
+    private javax.swing.JLabel phoneLabel;
+    private javax.swing.JScrollPane scrollPane;
+    private javax.swing.JSeparator separator;
+    private javax.swing.JComboBox<String> startDateBox;
+    private javax.swing.JLabel startDateLabel;
+    private javax.swing.JComboBox<String> statusBox;
+    private javax.swing.JLabel statusLabel;
+    private javax.swing.JTable table;
+    private javax.swing.JLabel titleLabel;
+    private javax.swing.JButton updateButton;
+
+    public HRDatabase() {
+        initComponents();
+        employee = null;
+        database = new Database();
+        saveLocation = null;
+        model = (DefaultTableModel) table.getModel();
+        // Opens the application in the middle of the screen
+        setLocationRelativeTo(null);
+    }
+    
+    // Clears all the fields from text
+    private void clearButtonActionPerformed(java.awt.event.ActionEvent evt) {                                            
+        // Gets all the fields and boxes
+        javax.swing.JComponent[] fields = getFields();
+        // Iterates over them to clear them from text
+        for (javax.swing.JComponent field : fields) {
+            if (field instanceof javax.swing.JTextField) {
+                ((javax.swing.JTextField) field).setText(null);
+            }
+            else {
+                ((javax.swing.JComboBox) field).setSelectedIndex(-1);
+            }
+        }
+    }                                           
+
+    // Checks if all fields have text and if the e-mail and phone no. formats are correct
+    // If correct, adds employee data to the table and to an ArrayList of the Database class
+    private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {                                          
+        // Checks if all fields have text and if all the text is correct
+        if (firstNameField.getText().equals("") || lastNameField.getText().equals("")
+        || emailField.getText().equals("") || phoneField.getText().equals("") ||
+        departmentBox.getSelectedItem() == null || statusBox.getSelectedItem() == null 
+        || startDateBox.getSelectedItem() == null || endDateBox.getSelectedItem() == null 
+        || countryBox.getSelectedItem() == null){
+            JOptionPane.showMessageDialog(this, "Please fill in all the fields.", "Warning", JOptionPane.WARNING_MESSAGE);      
+        }
+        else if (!emailField.getText().matches("^(.+)@(.+)$")) {
+            JOptionPane.showMessageDialog(this, "Fill in a correct e-mail address.", "Warning", JOptionPane.WARNING_MESSAGE);
+        }
+        else if (!phoneField.getText().matches("[0-9 -]+")) {
+            JOptionPane.showMessageDialog(this, "Fill in a correct phone number.", "Warning", JOptionPane.WARNING_MESSAGE);
+        }
+        else {
+            // Gets all the employee data in String format
+            String firstName = firstNameField.getText();
+            String lastName = lastNameField.getText();
+            String department = departmentBox.getSelectedItem().toString();
+            String status = statusBox.getSelectedItem().toString();
+            String startDate = startDateBox.getSelectedItem().toString();
+            String endDate = endDateBox.getSelectedItem().toString();
+            String country = countryBox.getSelectedItem().toString();
+            String email = emailField.getText();
+            String phone = phoneField.getText().replace("-", "").replace(" ", "");
+            // Adds a new row with employee data to the table
+            model.addRow(new Object[]{firstName, lastName, department,
+            status, startDate, endDate, country, email, phone});
+            // Adds an employee object to the ArrayList of the Database class
+            employee = new Employee(firstName, lastName, department, status, startDate, endDate, country, email, phone);
+            database.addEmployee(employee);            
+        }
+    }                                         
+
+    // Deletes an employee from the table and from the ArrayList in the Database class
+    private void deleteButtonActionPerformed(java.awt.event.ActionEvent evt) {                                             
+        // Warning message if no employee is selected
+        if (table.getSelectedRow() == -1) {
+            JOptionPane.showMessageDialog(this, "Select an employee to delete", "Warning", JOptionPane.WARNING_MESSAGE);
+        }
+        else {
+            int result = JOptionPane.showConfirmDialog(this, "Are you sure?", "Select an Option" , JOptionPane.YES_NO_OPTION);
+            if (result == JOptionPane.OK_OPTION) {
+                employee = getSelectedEmployee(table.getSelectedRow());
+                if (employee != null) {
+                    database.removeEmployee(employee);
+                    model.removeRow(table.getSelectedRow());
+                }
+            }
+        }
+    }                                            
+
+    // Updates the employee data with the new info from the text fields
+    private void updateButtonActionPerformed(java.awt.event.ActionEvent evt) {                                             
+        // Warning message if no employee is selected
+        if (table.getSelectedRow() == -1) {
+            JOptionPane.showMessageDialog(this, "Select an employee to update", "Warning", JOptionPane.WARNING_MESSAGE);
+        }
+        else {
+            // Gets the selected employee, and all the fields and boxes
+            int selectedRow = table.getSelectedRow();
+            javax.swing.JComponent[] fields = getFields();
+            // Loops over the fields and boxes to update the employee info in the table
+            for (int i = 0; i < fields.length; i++) {
+                javax.swing.JComponent item = fields[i];
+                if (item instanceof javax.swing.JTextField) {
+                    model.setValueAt(((javax.swing.JTextField) item).getText(), selectedRow, i);
+                }
+                else {
+                    model.setValueAt(((javax.swing.JComboBox) item).getSelectedItem(), selectedRow, i);
+                }
+            } 
+            // Updates the info of the employee object
+            employee = getSelectedEmployee(table.getSelectedRow());
+            employee.setFirstName(model.getValueAt(selectedRow, 0).toString());
+            employee.setLastName(model.getValueAt(selectedRow, 1).toString());
+            employee.setDepartment(model.getValueAt(selectedRow, 2).toString());
+            employee.setStatus(model.getValueAt(selectedRow, 3).toString());
+            employee.setStartDate(model.getValueAt(selectedRow, 4).toString());
+            employee.setEndDate(model.getValueAt(selectedRow, 5).toString());
+            employee.setCountry(model.getValueAt(selectedRow, 6).toString());
+            employee.setEmail(model.getValueAt(selectedRow, 7).toString());
+            employee.setPhone(model.getValueAt(selectedRow, 8).toString());
+            // Info message saying that the employee has been updated
+            JOptionPane.showMessageDialog(this, "Employee updated", "Message", JOptionPane.INFORMATION_MESSAGE);
+        }
+    }                                            
+
+    // When you click an employee in the table, the update and delete buttons are 
+    // enabled and the employee's information appears in the text fields
+    private void tableMouseClicked(java.awt.event.MouseEvent evt) {                                   
+        // Enables update and delete buttons
+        updateButton.setEnabled(true);
+        deleteButton.setEnabled(true);
+        // Gets the selected employee, and all the fields and boxes
+        int selectedRow = table.getSelectedRow();
+        javax.swing.JComponent[] fields = getFields();
+        // Loops over the fields and boxes and puts the selected employee's info
+        // in the text fields and boxes
+        for (int i = 0; i < fields.length; i++) {
+            javax.swing.JComponent item = fields[i];
+            if (item instanceof javax.swing.JTextField) {
+                ((javax.swing.JTextField) item).setText(model.getValueAt(selectedRow, i).toString());
+            }
+            else {
+                ((javax.swing.JComboBox) item).setSelectedItem(model.getValueAt(selectedRow, i));
+            }
+        }
+        // If you double click an employee, their info will show in a pop-up screen
+        if (evt.getClickCount() == 2) {
+            employee = getSelectedEmployee(selectedRow);
+            EmployeeInfoWindow page = new EmployeeInfoWindow(this, true, employee);
+            page.setVisible(true);
+        }
+    }                                  
+
+    // Opens a .ma file with a Database object containing employee data
+    private void menuOpenActionPerformed(java.awt.event.ActionEvent evt) {                                         
+        // Opens a window to choose a .ma file
+        JFileChooser chooser = new JFileChooser();
+        int result = fileChooserChoice(chooser, "open");
+        if (result == JFileChooser.APPROVE_OPTION) {
+            // Gives a warning message if the selected file is not a .ma file
+            if (!chooser.getSelectedFile().toString().toLowerCase().endsWith(".ma")) {
+                JOptionPane.showMessageDialog(this, "Unsupported file type selected.", "Warning", JOptionPane.ERROR_MESSAGE);
+            }
+            else {
+                // If the file type is correct, the Database object is read
+                // and the employee info is loaded to the table
+                try {
+                    FileInputStream fis = new FileInputStream(chooser.getSelectedFile());
+                    ObjectInputStream ois = new ObjectInputStream(fis);
+                    Object databaseData = ois.readObject();
+                    if (databaseData instanceof Database) {
+                        database = (Database) databaseData;
+                        reloadTable();
+                    }
+                    // Changes the save location to the current file in case 
+                    // the user wants to overwrite it
+                    saveLocation = chooser.getSelectedFile().toString();
+                    ois.close();
+                } catch (IOException|ClassNotFoundException ex) {
+                    System.err.println("Caught exception: " + ex.getMessage());
+                }
+            }
+        }
+    }                                        
+
+    // Saves the file to the current save location. 
+    // If there's none, it'll perform the Save As function
+    private void menuSaveActionPerformed(java.awt.event.ActionEvent evt) {                                         
+        if (saveLocation != null) {
+            saveFile(saveLocation);
+        }
+        else {
+            menuSaveAsActionPerformed(evt);
+        }
+    }                                        
+
+    // The standard Save As functionality
+    private void menuSaveAsActionPerformed(java.awt.event.ActionEvent evt) {                                           
+        // Opens a window to choose a .ma file
+        JFileChooser chooser = new JFileChooser();
+        int result = fileChooserChoice(chooser, "save");
+        if (result == JFileChooser.APPROVE_OPTION) {
+            // Saves the employee info to a new .ma file
+            File file = chooser.getSelectedFile();
+            String fileName = file.toString();
+            if (!fileName.toLowerCase().endsWith(".ma")) {
+                fileName += ".ma";
+            }
+            boolean saved = saveFile(fileName);
+            if (saved) {
+                // Changes the save location to the current file
+                saveLocation = fileName;
+            }
+        }
+    }                                          
+
+    // Exits the HR Database application
+    private void menuExitActionPerformed(java.awt.event.ActionEvent evt) {                                         
+        this.dispose();
+    }                                        
+
+    // Gets an ArrayList of all the fields and boxes for user input
+    private javax.swing.JComponent[] getFields() {
+        javax.swing.JComponent[] fields = {firstNameField, lastNameField, departmentBox,
+        statusBox, startDateBox, endDateBox, countryBox, emailField, phoneField};
+        return fields;
+    }
+    
+    // Sets file chooser filter settings and returns a user choice
+    private int fileChooserChoice(JFileChooser chooser, String action) {
+        chooser.setFileFilter(new MaFilter());
+        chooser.setAcceptAllFileFilterUsed(false);
+        int result;
+        if (action.equals("open")) result = chooser.showOpenDialog(this);
+        else result = chooser.showSaveDialog(this);
+        return result;
+    }
+    
+    // Saves the employee info to a file, including the Database object
+    private boolean saveFile(String fileName) {
+        try {
+            FileOutputStream fos = new FileOutputStream(fileName);
+            ObjectOutputStream ois = new ObjectOutputStream(fos);
+            ois.writeObject(database);
+            ois.close();
+            return true;
+        } 
+        catch (IOException ex) {
+            return false;
+        }
+    }
+    
+    // Deletes all the old employees from the table and adds the new ones
+    private void reloadTable() {
+        int rows = model.getRowCount();
+        // Deletes the rows from the highest index downwards, since deleting 
+        // from index 0 would shift all remaining rows to a lower index
+        for (int i = rows - 1; i >= 0; i--) {
+            model.removeRow(i); 
+        }
+        // Adds the employee info to the table
+        for (Employee emp : database.getEmployees()) {
+            model.addRow(new Object[]{});
+            reloadEmployeeData(model.getRowCount() - 1, emp);
+        }
+    }
+    
+    // Takes the info from an employee instance and puts it in the table
+    private void reloadEmployeeData(int selectedRow, Employee employee) {
+        model.setValueAt(employee.getFirstName(), selectedRow, 0);
+        model.setValueAt(employee.getLastName(), selectedRow, 1);
+        model.setValueAt(employee.getDepartment(), selectedRow, 2);
+        model.setValueAt(employee.getStatus(), selectedRow, 3);
+        model.setValueAt(employee.getStartDate(), selectedRow, 4);
+        model.setValueAt(employee.getEndDate(), selectedRow, 5);
+        model.setValueAt(employee.getCountry(), selectedRow, 6);
+        model.setValueAt(employee.getEmail(), selectedRow, 7);
+        model.setValueAt(employee.getPhone(), selectedRow, 8);
+    }
+    
+    // Gets the selected employee from the database by last name
+    private Employee getSelectedEmployee(int selectedRow) {
+        if (selectedRow >= 0) {
+            String name = (String) table.getValueAt(selectedRow, 1);
+            employee = database.getEmployeeByName(name);
+        }
+        return employee;
+    }
