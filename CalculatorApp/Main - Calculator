@@ -2,7 +2,6 @@ import java.math.RoundingMode;
 import java.text.DecimalFormat;
 
 /**
- * @author Jing Ma
  * Calculator application that lets you do basic arithmetic.
  * Includes the code for the functionality, not for the GUI.
  */
