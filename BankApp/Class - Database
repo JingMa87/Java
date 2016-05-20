@@ -1,19 +1,17 @@
-package BankApplication;
-
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.ArrayList;
 
 /**
- * Bank class that adds customer objects to an ArrayList
- * Implements serializable to make reading and writing possible
+ * Database class that adds customer objects to an ArrayList
+ Implements serializable to make reading and writing possible
  */
-public class Bank implements Serializable{
+public class Database implements Serializable{
     // The ArrayList of customer objects
     private ArrayList<Customer> customers = new ArrayList<>();
     
-    // Adds a new customer object to the bank
+    // Adds a new customer object to the database
     public void addCustomer(Customer customer) {
         // Gets a new account number if the current one already exists
         if (accountExists(customer.getAccount().getAccountNumber())) {
@@ -32,7 +30,7 @@ public class Bank implements Serializable{
         return false;
     }
     
-    // Removes customer object from the bank
+    // Removes customer object from the database
     public void removeCustomer(Customer customer) {
         customers.remove(customer);
     }
@@ -51,7 +49,7 @@ public class Bank implements Serializable{
         return customers;
     }
 
-    // Searches the bank for a customer by account number and returns it
+    // Searches the database for a customer by account number and returns it
     public Customer getCustomerByAccountNumber(int accountNumber) {
         for(Customer customer : customers){
             if(customer.getAccount().getAccountNumber() == accountNumber) return customer;
