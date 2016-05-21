@@ -1,3 +1,5 @@
+package BankApplication;
+
 import java.io.Serializable;
 
 /**
@@ -71,7 +73,7 @@ public class Account implements Serializable {
     
     // Checks the balance and determines the interest and transaction fee
     public void checkInterestAndTransactionFee(double balance){
-        if (balance > 10000) {
+        if (balance >= 10000) {
             interest = 0.05;
             transactionFee = 2;
         }
