@@ -18,7 +18,7 @@ public class Employee implements Serializable{
     private String phone;
     
     // Constructor taking in employee info as arguments
-    Employee(String firstName, String lastName, String department, String status, 
+    public Employee(String firstName, String lastName, String department, String status, 
     String startDate, String endDate, String country, String email, String phone) {
         this.firstName = firstName;
         this.lastName = lastName;
