@@ -1,0 +1,80 @@
+import java.io.Serializable;
+
+/**
+ * Abstract account class including an account no. and a balance.
+ * Implements serializable to make reading and writing possible.
+ */
+public abstract class Account implements Serializable {
+
+    // Attributes of an account
+    private int accountNumber;
+    private static int numberOfAccounts = 1000000;
+    private double balance;
+    private double interest;
+    private double transactionFee;
+    
+    // Constructer that sets the account number
+    Account() {
+        accountNumber = getNextAccountNumber();
+    }
+    
+    // Abstract method for returning the account type
+    public abstract String getAccountType();
+    
+    // Returns the next account no.
+    public static int getNextAccountNumber(){
+        return ++numberOfAccounts;
+    }
+
+    // Returns the account no.
+    public int getAccountNumber() {
+        return accountNumber;
+    }
+
+    // Changes the account number
+    public void setAccountNumber(int accountNumber) {
+        this.accountNumber = accountNumber;
+    }
+    
+    // Returns the balance of the account
+    public double getBalance() {
+        return balance;
+    }
+
+    // Changes the balance of the account
+    public void setBalance(double balance) {
+        this.balance = balance;
+    }
+
+    // Returns the interest of the account
+    public double getInterest() {
+        return interest;
+    }
+
+    // Withdraws money from the account
+    public void withdraw(double amount) {
+        balance -= amount + transactionFee;
+    }
+    
+    // Deposits money to the account
+    public void deposit(double amount) {
+        checkInterest(amount);
+        balance += amount + (amount * interest);
+    }
+    
+    // Checks the withdraw/deposit amount and determines the interest fee
+    public void checkInterest(double amount){
+        if (balance + amount > 10000) interest = 0.05;
+        else interest = 0.02;
+    }
+
+    // Returns the transaction fee of the account
+    public double getTransactionFee() {
+        return transactionFee;
+    }
+    
+    // Changes the transaction fee of the account
+    public void setTransactionFee(double transactionFee){
+        this.transactionFee = transactionFee;
+    }
+}
