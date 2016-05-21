@@ -5,26 +5,27 @@
 public class CustomerInfoWindow extends javax.swing.JDialog {
 
     // Initializes GUI components
-    private javax.swing.JLabel accountNumberField;
-    private javax.swing.JLabel balanceField;
-    private javax.swing.JLabel feeField;
-    private javax.swing.JLabel firstNameField;
-    private javax.swing.JLabel interestField;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel13;
-    private javax.swing.JLabel jLabel15;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel9;
-    private javax.swing.JLabel lastNameField;
-    private javax.swing.JLabel ssnField;
-    private javax.swing.JLabel typeField;
+    private javax.swing.JLabel accountNumberLabel1;
+    private javax.swing.JLabel accountNumberLabel2;
+    private javax.swing.JLabel accountTypeLabel1;
+    private javax.swing.JLabel accountTypeLabel2;
+    private javax.swing.JLabel balanceLabel1;
+    private javax.swing.JLabel balanceLabel2;
+    private javax.swing.JLabel firstNameLabel1;
+    private javax.swing.JLabel firstNameLabel2;
+    private javax.swing.JLabel interestRateLabel1;
+    private javax.swing.JLabel interestRateLabel2;
+    private javax.swing.JLabel lastNameLabel1;
+    private javax.swing.JLabel lastNameLabel2;
+    private javax.swing.JButton okButton;
+    private javax.swing.JLabel ssnLabel1;
+    private javax.swing.JLabel ssnLabel2;
+    private javax.swing.JLabel transactionFeeLabel1;
+    private javax.swing.JLabel transactionFeeLabel2;
     
     // Constructor
     public CustomerInfoWindow(java.awt.Frame parent, boolean modal, Customer customer) {
+    
         // Blocks input to the parent window of this page, the HR Database 
         super(parent, modal);
         setLocationRelativeTo(parent);
