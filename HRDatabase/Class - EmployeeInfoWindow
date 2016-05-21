@@ -4,28 +4,6 @@
  */
 public class EmployeeInfoWindow extends javax.swing.JDialog {
 
-    // Initializes GUI components
-    private javax.swing.JLabel countryLabel1;
-    private javax.swing.JLabel countryLabel2;
-    private javax.swing.JLabel departmentLabel1;
-    private javax.swing.JLabel departmentLabel2;
-    private javax.swing.JLabel emailLabel1;
-    private javax.swing.JLabel emailLabel2;
-    private javax.swing.JLabel endDateLabel1;
-    private javax.swing.JLabel endDateLabel2;
-    private javax.swing.JLabel firstNameLabel1;
-    private javax.swing.JLabel firstNameLabel2;
-    private javax.swing.JLabel lastNameLabel1;
-    private javax.swing.JLabel lastNameLabel2;
-    private javax.swing.JButton okButton;
-    private javax.swing.JLabel phoneLabel1;
-    private javax.swing.JLabel phoneLabel2;
-    private javax.swing.JLabel startDateLabel1;
-    private javax.swing.JLabel startDateLabel2;
-    private javax.swing.JLabel statusLabel1;
-    private javax.swing.JLabel statusLabel2;
-    
-    // Constructor
     public EmployeeInfoWindow(java.awt.Frame parent, boolean modal, Employee employee) {
         // Blocks input to the parent window of this page, the HR Database 
         super(parent, modal);
