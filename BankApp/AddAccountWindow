@@ -1,0 +1,72 @@
+import javax.swing.JOptionPane;
+
+/**
+ * Opens a pop-up window to create a new account.
+ * Extends the JDialog window class.
+ */
+public class AddAccountWindow extends javax.swing.JDialog {
+    // Declares a database and a customer object
+    private Database database;
+    private Customer customer;
+
+    // Constructor that takes in a database to add a new customer to.
+    // Also initiates a customer object so it can be returned to the main class.
+    public AddAccountWindow(java.awt.Frame parent, boolean modal, Database database) {
+        // Blocks input to the parent window of this page, the Main Menu 
+        super(parent, modal);
+        initComponents();
+        setLocationRelativeTo(parent);
+        this.database = database;
+        customer = null;
+    }
+    
+    // Closes the AddAccountWindow
+    private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {                                             
+        this.dispose();
+    }                                            
+
+    // Checks if all the fields are filled in and have the correct format.
+    // Saves the information to the database and returns a new employee object.
+    private void okButtonActionPerformed(java.awt.event.ActionEvent evt) {                                         
+        // Stores the info filled in by the user as variables
+        String firstName = firstNameField.getText();
+        String lastName = lastNameField.getText();
+        String ssn = ssnField.getText().replace("-", "");
+        String initialDeposit = initialDepositField.getText();
+        String accountType = accountTypeBox.getSelectedItem().toString();
+        // Checks if all the fields are filled in and are in the correct format
+        if (firstName.isEmpty() || lastName.isEmpty() || ssn.isEmpty() || initialDeposit.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Please fill in all fields.", "Warning", JOptionPane.WARNING_MESSAGE);
+        }
+        else if (!ssn.matches("(\\d{3}-?){2}\\d{4}")) {
+            JOptionPane.showMessageDialog(this, "SSN must have the format xxx-xxx-xxxx.", "Warning", JOptionPane.WARNING_MESSAGE);
+        }
+        else if (!initialDeposit.matches("[0-9]+")) {
+            JOptionPane.showMessageDialog(this, "Initial deposit must be a number.", "Warning", JOptionPane.WARNING_MESSAGE);
+        }
+        else if (accountType.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Select an account type.", "Warning", JOptionPane.WARNING_MESSAGE);
+        }
+        else {
+            // Creates a new account of type Checking or Savings with a balance
+            Account account = null;
+            double amount = Database.round(Double.parseDouble(initialDeposit), 2);
+            if (accountType.equals("Checking")) {
+                if (amount >= 50) account = new Checking(amount);
+                else JOptionPane.showMessageDialog(this, "Initial deposit must be at least $50 for Checking accounts.", "Warning", JOptionPane.WARNING_MESSAGE);
+            }
+            else if (accountType.equals("Savings")) {
+                if (amount >= 100) account = new Savings(amount);
+                else JOptionPane.showMessageDialog(this, "Initial deposit must be at least $100 for Savings accounts.", "Warning", JOptionPane.WARNING_MESSAGE);
+            }
+            // Creates a new customer with the info provided and adds them to the database
+            customer = new Customer(firstName, lastName, ssn, account);
+            database.addCustomer(customer);
+            this.dispose();
+        }
+    }                                        
+
+    // Returns the customer created by the user
+    public Customer getCustomer() {
+        return customer;
+    }
