@@ -5,6 +5,7 @@ import javax.swing.JOptionPane;
  * Extends the JDialog window class.
  */
 public class DepositWindow extends javax.swing.JDialog {
+
     // Declares a customer object
     private final Customer customer;
     
@@ -16,6 +17,11 @@ public class DepositWindow extends javax.swing.JDialog {
         this.customer = customer;
     }
     
+    // Closes the DepositWindow
+    private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {                                             
+        this.dispose();
+    }                                            
+
     // Deposits money to the account
     private void depositButtonActionPerformed(java.awt.event.ActionEvent evt) {                                              
         // Declares and initializes the deposit amount and the account
@@ -38,10 +44,5 @@ public class DepositWindow extends javax.swing.JDialog {
                 this.dispose();
             }
         }
-    }
-        
-    // Closes the DepositWindow
-    private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {                                             
-        this.dispose();
     }
 }
