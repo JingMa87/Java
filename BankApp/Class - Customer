@@ -4,12 +4,14 @@ import java.io.Serializable;
  * Customer class that gives customer objects multiple attributes
  * Implements serializable to make reading and writing possible
  */
-public class Customer  implements Serializable{
+public class Customer implements Serializable {
+
     // Attributes of a customer
     private final String firstName;
     private final String lastName;
     private final String ssn;
     private final Account account;
+    
     // Constructor taking in customer info as arguments
     Customer(String firstName, String lastName, String ssn, Account account) {
         this.firstName = firstName;
