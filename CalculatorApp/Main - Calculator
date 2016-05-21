@@ -8,33 +8,11 @@ import java.text.DecimalFormat;
 public class Calculator extends javax.swing.JFrame {
 
     // Instance variables for doing the calculations
-    double firstNum;
     private double firstNum;
     private double secondNum;
     private double result;
     private String answer;
     private String operation;
-    
-    // Instance variables for the GUI buttons and textfield
-    private javax.swing.JButton addButton;
-    private javax.swing.JButton calculateButton;
-    private javax.swing.JButton clearButton;
-    private javax.swing.JButton decimalButton;
-    private javax.swing.JButton divisionButton;
-    private javax.swing.JButton eightButton;
-    private javax.swing.JButton fiveButton;
-    private javax.swing.JButton fourButton;
-    private javax.swing.JButton multiplyButton;
-    private javax.swing.JButton nineButton;
-    private javax.swing.JButton oneButton;
-    private javax.swing.JPanel panel;
-    private javax.swing.JTextField screen;
-    private javax.swing.JButton sevenButton;
-    private javax.swing.JButton sixButton;
-    private javax.swing.JButton subtractButton;
-    private javax.swing.JButton threeButton;
-    private javax.swing.JButton twoButton;
-    private javax.swing.JButton zeroButton;
 
     public Calculator() {
         // Opens the application in the middle of the screen
