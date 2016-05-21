@@ -5,6 +5,7 @@ import javax.swing.filechooser.FileFilter;
  * File filter that filters for .ma files and checks for correctness
  */
 class MaFilter extends FileFilter {
+
     // Checks if the path is correct
     @Override
     public boolean accept(File f) {
