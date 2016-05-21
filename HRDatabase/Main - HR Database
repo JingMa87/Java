@@ -22,43 +22,6 @@ public class HRDatabase extends JFrame {
     private String saveLocation;
     private DefaultTableModel model;
     
-    // Instance variables for the GUI buttons and text fields
-    private javax.swing.JButton addButton;
-    private javax.swing.JLabel addEmployeeLabel;
-    private javax.swing.JButton clearButton;
-    private javax.swing.JComboBox<String> countryBox;
-    private javax.swing.JLabel countryLabel;
-    private javax.swing.JButton deleteButton;
-    private javax.swing.JComboBox<String> departmentBox;
-    private javax.swing.JLabel departmentLabel;
-    private javax.swing.JTextField emailField;
-    private javax.swing.JLabel emailLabel;
-    private javax.swing.JComboBox<String> endDateBox;
-    private javax.swing.JLabel endDateLabel;
-    private javax.swing.JTextField firstNameField;
-    private javax.swing.JLabel firstNameLabel;
-    private javax.swing.JTextField lastNameField;
-    private javax.swing.JLabel lastNameLabel;
-    private javax.swing.JMenu menu;
-    private javax.swing.JMenuBar menuBar;
-    private javax.swing.JMenuItem menuExit;
-    private javax.swing.JMenuItem menuOpen;
-    private javax.swing.JMenuItem menuSave;
-    private javax.swing.JMenuItem menuSaveAs;
-    private javax.swing.JPanel panel1;
-    private javax.swing.JPanel panel2;
-    private javax.swing.JTextField phoneField;
-    private javax.swing.JLabel phoneLabel;
-    private javax.swing.JScrollPane scrollPane;
-    private javax.swing.JSeparator separator;
-    private javax.swing.JComboBox<String> startDateBox;
-    private javax.swing.JLabel startDateLabel;
-    private javax.swing.JComboBox<String> statusBox;
-    private javax.swing.JLabel statusLabel;
-    private javax.swing.JTable table;
-    private javax.swing.JLabel titleLabel;
-    private javax.swing.JButton updateButton;
-
     public HRDatabase() {
         initComponents();
         employee = null;
