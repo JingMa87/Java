@@ -5,6 +5,7 @@ import javax.swing.JOptionPane;
  * Extends the JDialog window class.
  */
 public class AddAccountWindow extends javax.swing.JDialog {
+
     // Declares a database and a customer object
     private Database database;
     private Customer customer;
@@ -19,7 +20,7 @@ public class AddAccountWindow extends javax.swing.JDialog {
         this.database = database;
         customer = null;
     }
-    
+
     // Closes the AddAccountWindow
     private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {                                             
         this.dispose();
@@ -52,11 +53,11 @@ public class AddAccountWindow extends javax.swing.JDialog {
             Account account = null;
             double amount = Database.round(Double.parseDouble(initialDeposit), 2);
             if (accountType.equals("Checking")) {
-                if (amount >= 50) account = new Checking(amount);
+                if (amount >= 50) account = new Account(amount, "Checking");
                 else JOptionPane.showMessageDialog(this, "Initial deposit must be at least $50 for Checking accounts.", "Warning", JOptionPane.WARNING_MESSAGE);
             }
             else if (accountType.equals("Savings")) {
-                if (amount >= 100) account = new Savings(amount);
+                if (amount >= 100) account = new Account(amount, "Savings");
                 else JOptionPane.showMessageDialog(this, "Initial deposit must be at least $100 for Savings accounts.", "Warning", JOptionPane.WARNING_MESSAGE);
             }
             // Creates a new customer with the info provided and adds them to the database
@@ -70,3 +71,4 @@ public class AddAccountWindow extends javax.swing.JDialog {
     public Customer getCustomer() {
         return customer;
     }
+}
