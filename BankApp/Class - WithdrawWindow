@@ -1,0 +1,50 @@
+import javax.swing.JOptionPane;
+
+/**
+ * Opens a pop-up window for the user to withdraw money.
+ * Extends the JDialog window class.
+ */
+public class WithdrawWindow extends javax.swing.JDialog {
+    // Declares a customer object
+    private final Customer customer;
+    
+    // Constructor takes in an employee in order to withdraw money to their account
+    public WithdrawWindow(java.awt.Frame parent, boolean modal, Customer customer) {
+        super(parent, modal);
+        initComponents();
+        setLocationRelativeTo(parent);
+        this.customer = customer;
+    }
+    
+    // Withdraws money from the account
+    private void withdrawButtonActionPerformed(java.awt.event.ActionEvent evt) {                                               
+        // Declares and initializes the withdraw amount and the account
+        String withdrawAmount = withdrawAmountField.getText();
+        Account account = customer.getAccount();
+        // Checks if the withdraw field is filled in and has a correct format
+        if (withdrawAmount.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Enter a withdrawal amount.", "Warning", JOptionPane.WARNING_MESSAGE);
+        }
+        else if (!withdrawAmount.matches("[0-9.]+")) {
+            JOptionPane.showMessageDialog(this, "Enter a correct amount.", "Warning", JOptionPane.WARNING_MESSAGE);
+        }
+        else if (Double.parseDouble(withdrawAmount) + account.getTransactionFee() > account.getBalance()) {
+            JOptionPane.showMessageDialog(this, "Not enough funds for this transaction.", "Warning", JOptionPane.WARNING_MESSAGE);
+        }
+        // Withdraws the amount to the account of the customer
+        else {
+            double amount = Database.round(Double.parseDouble(withdrawAmount), 2);
+            int result = JOptionPane.showConfirmDialog(this, "Withdraw $" + String.format("%.2f", amount) + " from the account?\n " +
+            "Transaction Fee: $" + String.format("%.2f", account.getTransactionFee()), "Select an Option" , JOptionPane.YES_NO_OPTION);
+            if (result == JOptionPane.OK_OPTION) {
+                account.withdraw(amount);
+                this.dispose();
+            }
+        } 
+    }
+    
+    // Closes the WithdrawWindow
+    private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {                                             
+        this.dispose();
+    }
+}
