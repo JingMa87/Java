@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 /**
  * Database class that adds customer objects to an ArrayList
- Implements serializable to make reading and writing possible
+ * Implements serializable to make reading and writing possible
  */
 public class Database implements Serializable{
     // The ArrayList of customer objects
