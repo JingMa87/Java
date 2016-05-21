@@ -8,14 +8,16 @@ import java.util.ArrayList;
  * Implements serializable to make reading and writing possible
  */
 public class Database implements Serializable{
+
     // The ArrayList of customer objects
     private ArrayList<Customer> customers = new ArrayList<>();
     
     // Adds a new customer object to the database
     public void addCustomer(Customer customer) {
+        Account account = customer.getAccount();
         // Gets a new account number if the current one already exists
-        if (accountExists(customer.getAccount().getAccountNumber())) {
-            customer.getAccount().setAccountNumber(findValidAccountNumber());
+        if (accountExists(account.getAccountNumber())) {
+            account.setAccountNumber(findValidAccountNumber());
         }
         customers.add(customer);
     }
