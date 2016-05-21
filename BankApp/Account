@@ -1,0 +1,83 @@
+import java.io.Serializable;
+
+/**
+ * Abstract account class including an account no. and a balance.
+ * Implements serializable to make reading and writing possible.
+ */
+public class Account implements Serializable {
+
+    // Attributes of an account
+    private String accountType;
+    private int accountNumber;
+    private static int numberOfAccounts = 1000000;
+    private double balance;
+    private double interest;
+    private double transactionFee;
+    
+    // Constructer that sets the account number, balance and account type
+    public Account(double balance, String accountType) {
+        accountNumber = getNextAccountNumber();
+        this.balance = balance;
+        this.accountType = accountType;
+        checkInterestAndTransactionFee(balance);
+    }
+    
+    // Returns the account type
+    public String getAccountType() {
+        return accountType;
+    }
+    
+    // Returns the next account no.
+    public static int getNextAccountNumber(){
+        return ++numberOfAccounts;
+    }
+
+    // Returns the account no.
+    public int getAccountNumber() {
+        return accountNumber;
+    }
+
+    // Changes the account number
+    public void setAccountNumber(int accountNumber) {
+        this.accountNumber = accountNumber;
+    }
+    
+    // Returns the balance of the account
+    public double getBalance() {
+        return balance;
+    }
+
+    // Returns the interest of the account
+    public double getInterest() {
+        return interest;
+    }
+    
+    // Returns the transaction fee of the account
+    public double getTransactionFee() {
+        return transactionFee;
+    }
+
+    // Deposits money to the account
+    public void deposit(double amount) {
+        balance += amount + (amount * interest);
+        checkInterestAndTransactionFee(balance);
+    }
+    
+    // Withdraws money from the account
+    public void withdraw(double amount) {
+        balance -= amount + transactionFee;
+        checkInterestAndTransactionFee(balance);
+    }
+    
+    // Checks the balance and determines the interest and transaction fee
+    public void checkInterestAndTransactionFee(double balance){
+        if (balance > 10000) {
+            interest = 0.05;
+            transactionFee = 2;
+        }
+        else {
+            interest = 0.02;
+            transactionFee = 5;
+        }
+    }
+}
