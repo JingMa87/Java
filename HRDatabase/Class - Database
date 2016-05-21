@@ -6,6 +6,7 @@ import java.util.ArrayList;
  * Implements serializable to make reading and writing possible
  */
 public class Database implements Serializable{
+
     // The ArrayList of employee objects
     private ArrayList<Employee> employees = new ArrayList<>();
     
