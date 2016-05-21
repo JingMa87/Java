@@ -14,13 +14,14 @@ import javax.swing.table.DefaultTableModel;
  * There's also a save/open file functionality to export and import this info.
  */
 public class HRDatabase extends JFrame {
+
     // Instance variables for adding Employee objects to a table and
     // to an ArrayList in the Database class
     private Employee employee;
     private Database database;
     private String saveLocation;
     private DefaultTableModel model;
-    
+
     public HRDatabase() {
         initComponents();
         employee = null;
@@ -100,7 +101,7 @@ public class HRDatabase extends JFrame {
             updateButton.setEnabled(false);
             deleteButton.setEnabled(false);
         }
-    }                                          
+    }                                            
 
     // Updates the employee data with the new info from the text fields
     private void updateButtonActionPerformed(java.awt.event.ActionEvent evt) {                                             
@@ -178,7 +179,7 @@ public class HRDatabase extends JFrame {
             }
             else {
                 // If the file type is correct, the Database object is read
-                // and the employee info is loaded to the table
+                // and the employee info is loaded into the table
                 try {
                     FileInputStream fis = new FileInputStream(chooser.getSelectedFile());
                     ObjectInputStream ois = new ObjectInputStream(fis);
@@ -187,8 +188,8 @@ public class HRDatabase extends JFrame {
                         database = (Database) databaseData;
                         reloadTable();
                     }
-                    // Changes the save location to the current file in case 
-                    // the user wants to overwrite it
+                    // Changes the save location to the current file 
+                    // in case the user wants to overwrite it
                     saveLocation = chooser.getSelectedFile().toString();
                     ois.close();
                 } catch (IOException|ClassNotFoundException ex) {
@@ -241,7 +242,7 @@ public class HRDatabase extends JFrame {
         return fields;
     }
     
-    // Sets file chooser filter settings and returns a user choice
+    // Sets filechooser filter settings and returns a user choice
     private int fileChooserChoice(JFileChooser chooser, String action) {
         chooser.setFileFilter(new MaFilter());
         chooser.setAcceptAllFileFilterUsed(false);
@@ -251,7 +252,7 @@ public class HRDatabase extends JFrame {
         return result;
     }
     
-    // Saves the employee info to a file, including the Database object
+    // Saves the employees' info to a file, including the Database object
     private boolean saveFile(String fileName) {
         try {
             FileOutputStream fos = new FileOutputStream(fileName);
@@ -273,15 +274,16 @@ public class HRDatabase extends JFrame {
         for (int i = rows - 1; i >= 0; i--) {
             model.removeRow(i); 
         }
-        // Adds the employee info to the table
+        // Adds the employees' info to the table
         for (Employee emp : database.getEmployees()) {
-            model.addRow(new Object[]{});
-            reloadEmployeeData(model.getRowCount() - 1, emp);
+            reloadEmployeeData(emp);
         }
     }
     
     // Takes the info from an employee instance and puts it in the table
-    private void reloadEmployeeData(int selectedRow, Employee employee) {
+    private void reloadEmployeeData(Employee employee) {
+        model.addRow(new Object[]{});
+        int selectedRow = model.getRowCount() - 1;
         model.setValueAt(employee.getFirstName(), selectedRow, 0);
         model.setValueAt(employee.getLastName(), selectedRow, 1);
         model.setValueAt(employee.getDepartment(), selectedRow, 2);
@@ -297,7 +299,8 @@ public class HRDatabase extends JFrame {
     private Employee getSelectedEmployee(int selectedRow) {
         if (selectedRow >= 0) {
             String name = (String) table.getValueAt(selectedRow, 1);
-            employee = database.getEmployeeByName(name);
+            employee = database.getEmployeeByLastName(name);
         }
         return employee;
     }
+}
