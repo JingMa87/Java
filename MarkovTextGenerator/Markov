@@ -1,0 +1,143 @@
+package textgen;
+
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Random;
+
+/** 
+ * Markov text generator that creates a random piece of text based on a real text.
+ */
+public class Markov {
+
+    // List of words with their Markov words
+    private final List<ListNode> wordList; 
+    // First word of the new text
+    private String firstWord;
+    // Random number generator
+    private final Random rnGenerator;
+
+    // Constructor
+    public Markov() {
+        wordList = new LinkedList<>();
+        firstWord = "";
+        rnGenerator = new Random();
+    }
+
+    // Creates the list of Markov words
+    public void createWordList(String source) {
+        // Splits the source text into words if it isn't empty
+        if (source.length() > 0) {
+            String[] text = source.split("[\\s]+");
+            firstWord = text[0];
+            String prevWord = firstWord;
+            // Iterates over the words and adds the Markov words to a list
+            for (int i = 1; i < text.length; i++) {
+                boolean wordInList = false;
+                String word = text[i];
+                for (ListNode node : wordList) {
+                    if (node.getWord().equals(prevWord)) {
+                        node.addNextWord(word);
+                        wordInList = true;
+                    }
+                }
+                if (!wordInList) {
+                    ListNode node = new ListNode(prevWord);
+                    node.addNextWord(word);
+                    wordList.add(node);
+                }
+                prevWord = word;
+            }
+        }
+    }
+
+    // Generate the number of words requested
+    public String generateText(int numWords) {
+        String currWord = firstWord;
+        String output = "";
+        if (numWords > 0) {
+            output += currWord + " ";
+            int count = 1;
+            // If the list of words isn't empty
+            if (!wordList.isEmpty()) {
+                while (count < numWords) {
+                    // Loops to find the correct word in the list
+                    for (ListNode node : wordList) {
+                        String nextWord;
+                        if (node.getWord().equals(currWord)) { 
+                            // Adds random Markov words to the output text 
+                            nextWord = node.getRandomNextWord(rnGenerator);
+                            output += nextWord + " ";
+                            currWord = nextWord;
+                            count++;
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+        return output;
+    }
+
+    // String representation of this class
+    @Override
+    public String toString() {
+        String toReturn = "";
+        for (ListNode n : wordList) toReturn += n.toString();
+        
+        return toReturn;
+    }
+	
+    /**
+     * An example of the text you can generate.
+     */
+    public static void main(String[] args) {
+        Markov markov = new Markov();
+        String text = "I have a dream that one day this nation will rise up "
+            + "and live out the true meaning of its creed: "
+            + "We hold these truths to be self-evident, that all men are created equal. "
+            + "I have a dream that my four little children will one day live in a nation "
+            + "where they will not be judged by the color of their skin but by the content of their character. \n";
+        System.out.println("Original text: " + text);
+        markov.createWordList(text);
+        System.out.println("Markov text: " + markov.generateText(20));
+    }
+}
+
+// Links a word to Markov words in a list 
+class ListNode {
+    // The word to find a Markov word for
+    private final String word;
+    // List of Markov words
+    private final List<String> nextWords;
+
+    ListNode(String word) {
+        this.word = word;
+        nextWords = new LinkedList<>();
+    }
+
+    // Return the word to find a Markov word for
+    public String getWord() {
+        return word;
+    }
+
+    // Adds a new Markov word to the list
+    public void addNextWord(String nextWord) {
+        nextWords.add(nextWord);
+    }
+
+    // Returns a random Markov word
+    public String getRandomNextWord(Random generator) {
+        int n = generator.nextInt(nextWords.size());
+        return nextWords.get(n);
+    }
+
+    // String representation of this class
+    @Override
+    public String toString() {
+        String toReturn = word + ": ";
+        for (String s : nextWords) toReturn += s + "->";
+        toReturn += "\n";
+
+        return toReturn;
+    }	
+}
