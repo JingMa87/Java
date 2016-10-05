@@ -1,5 +1,6 @@
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
+import java.lang.*;
 
 /**
  * Calculator application that lets you do basic arithmetic.
@@ -88,7 +89,15 @@ public class Calculator extends javax.swing.JFrame {
     
     private void divisionButtonActionPerformed(java.awt.event.ActionEvent evt) {                                               
         getFirstNum("/");
-    }                                              
+    }
+
+    private void exponentialButtonActionPerformed(java.awt.event.ActionEvent evt) {                                               
+        getFirstNum("^");
+    }
+
+    private void logButtonActionPerformed(java.awt.event.ActionEvent evt) {                                               
+        getFirstNum("log");
+    }                                               
 
     // Calculates the result from firstNum and secondNum
     private void calculateButtonActionPerformed(java.awt.event.ActionEvent evt) {                                                
@@ -105,6 +114,12 @@ public class Calculator extends javax.swing.JFrame {
                 break;
             case "/":
                 result = firstNum / secondNum;
+                break;
+            case "^":
+                result = Math.pow(firstNum, secondNum);
+                break;
+            case "log":
+                result = Math.log(firstNum);
                 break;
             default:
                 break;
