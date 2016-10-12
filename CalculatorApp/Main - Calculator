@@ -88,7 +88,16 @@ public class Calculator extends javax.swing.JFrame {
     
     private void divisionButtonActionPerformed(java.awt.event.ActionEvent evt) {                                               
         getFirstNum("/");
-    }                                              
+    }
+    
+    private void squareRootButtonActionPerformed(java.awt.event.ActionEvent evt){
+    	getFirstNum("√");
+    }
+    
+    private void cubeRootButtonActionPerformed(java.awt.event.ActionEvent evt){
+    	getFirstNum("³√");
+    }
+
 
     // Calculates the result from firstNum and secondNum
     private void calculateButtonActionPerformed(java.awt.event.ActionEvent evt) {                                                
@@ -106,6 +115,12 @@ public class Calculator extends javax.swing.JFrame {
             case "/":
                 result = firstNum / secondNum;
                 break;
+            case "√":
+            	result = Math.sqrt(firstNum);
+            	break;
+            case "³√":
+            	result = Math.cbrt(firstNum);
+            	break;
             default:
                 break;
         }
